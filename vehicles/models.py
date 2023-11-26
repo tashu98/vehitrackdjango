@@ -34,9 +34,11 @@ class Service(models.Model):
 
 
 class ServiceFile(models.Model):
-    path = models.CharField(max_length=255)
-    hash = models.CharField(max_length=255)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey('Service', on_delete=models.CASCADE)
+    file = models.FileField(upload_to='service_files/')
+
+    def __str__(self):
+        return self.file.name
 
 
 class ServiceField(models.Model):
