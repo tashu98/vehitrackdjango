@@ -60,7 +60,7 @@ Make sure you have the following prerequisites installed on your machine:
 ### Stopping the Development Server
 To stop the development server, press `Ctrl+C` in the terminal.
 
-### Scripts
+## Scripts
 - **Seed data**
    You can seed data using following script:
    ```bash
