@@ -16,8 +16,8 @@ Make sure you have the following prerequisites installed on your machine:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your_username/your_project_name.git
-   cd your_project_name
+   git clone https://github.com/tashu98/vehitrackdjango.git
+   cd vehitrackdjango
    ```
 1. **Create a Virtual Environment (Optional but recommended):**
    ```bash
