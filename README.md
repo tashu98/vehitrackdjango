@@ -61,8 +61,8 @@ Make sure you have the following prerequisites installed on your machine:
 To stop the development server, press `Ctrl+C` in the terminal.
 
 ### Scripts
-- Seed data
-  You can seed data using following script:
-  ```bash
-  python manage.py runscript scripts.seed_data
-  ```
+- **Seed data**
+   You can seed data using following script:
+   ```bash
+   python manage.py runscript scripts.seed_data
+   ```
