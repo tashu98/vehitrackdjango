@@ -1,0 +1,29 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<div>
+    <h2>Vehicle Statistics</h2>
+    <p>Total Vehicles: <span>{{ total_vehicles }}</span></p>
+</div>
+
+<div>
+    <h2>Vehicle Types</h2>
+    <ul>
+        {% for vehicle_type in vehicle_types %}
+            <li>{{ vehicle_type.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <h2>Vehicle Statuses</h2>
+    <ul>
+        {% for vehicle_status in vehicle_statuses %}
+            <li>{{ vehicle_status.name }} - Color: {{ vehicle_status.color }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

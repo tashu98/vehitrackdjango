@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+<h1>Vehicle Statuses List</h1>
+
+<ul>
+    {% for vehicle_status in vehicle_statuses %}
+        <li>{{ vehicle_status.name }} - Color: {{ vehicle_status.color }}</li>
+    {% endfor %}
+</ul>
+{% endblock content %}

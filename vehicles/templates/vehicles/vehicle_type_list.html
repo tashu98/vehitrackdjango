@@ -1,0 +1,12 @@
+{% extends "_base.html" %}
+
+
+{% block content %}
+<h1>Vehicle Types List</h1>
+
+<ul>
+    {% for vehicle_type in vehicle_types %}
+        <li>{{ vehicle_type.name }}</li>
+    {% endfor %}
+</ul>
+{% endblock content %}
