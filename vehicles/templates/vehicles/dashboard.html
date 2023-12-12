@@ -2,28 +2,46 @@
 
 
 {% block content %}
-<h1>Dashboard</h1>
 
-<div>
-    <h2>Vehicle Statistics</h2>
-    <p>Total Vehicles: <span>{{ total_vehicles }}</span></p>
+<div class="block p-4 bg-white border border-gray-200 rounded-lg shadow">
+<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Dashboard</h5>
+<div class="grid grid-cols-4 gap-2">
+
+<div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Users : 40</h5>
+    <p class="font-normal text-gray-700 dark:text-gray-400">Active Users : 10</p>
 </div>
-
-<div>
-    <h2>Vehicle Types</h2>
-    <ul>
-        {% for vehicle_type in vehicle_types %}
-            <li>{{ vehicle_type.name }}</li>
-        {% endfor %}
-    </ul>
+<div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Vehicles : 40</h5>
+    <p class="font-normal text-gray-700 dark:text-gray-400">Active Vehicles : 10</p>
 </div>
+<div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Service costs</h5>
+    <div class="grid grid-cols-2">
+        <div>
+                <p class="font-small text-gray-700 dark:text-gray-400">last 7 days</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">10000$</p>
+        </div>
+        <div>
+                <p class="font-small text-gray-700 dark:text-gray-400">last 30 days</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">100000$</p>
+        </div>
+    </div>
+</div>
+<div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Mileage:</h5>
+    <div class="grid grid-cols-2">
+        <div>
+                <p class="font-small text-gray-700 dark:text-gray-400">last 7 days</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">10000</p>
+        </div>
+        <div>
+                <p class="font-small text-gray-700 dark:text-gray-400">last 30 days</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">100000</p>
+        </div>
+    </div>
 
-<div>
-    <h2>Vehicle Statuses</h2>
-    <ul>
-        {% for vehicle_status in vehicle_statuses %}
-            <li>{{ vehicle_status.name }} - Color: {{ vehicle_status.color }}</li>
-        {% endfor %}
-    </ul>
+</div>
+</div>
 </div>
 {% endblock content %}
