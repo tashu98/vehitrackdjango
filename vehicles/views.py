@@ -89,3 +89,10 @@ class VehicleDetailsView(View):
     def get(self, request, *args, **kwargs):
         # Retrieve the list of vehicle statuses from the database
         return render(request, self.template_name)
+
+class NewServiceView(View):
+    template_name = 'vehicles/new_service.html'
+
+    def get(self, request, *args, **kwargs):
+        # Retrieve the list of vehicle statuses from the database
+        return render(request, self.template_name)
