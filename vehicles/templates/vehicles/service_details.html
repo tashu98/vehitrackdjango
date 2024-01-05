@@ -5,51 +5,40 @@
     <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
   <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
       <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
-          <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
-              <div class="flex items-center flex-1 space-x-4">
-                  <h2 class="text-4xl font-extrabold dark:text-white">Users</h2>
-              </div>
-              <div class="flex flex-col flex-shrink-0 space-y-3 md:flex-row md:items-center lg:justify-end md:space-y-0 md:space-x-3">
-                  <button type="button" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                      <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                          <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
-                      </svg>
-                      Add new user
-                  </button>
+          <div class="p-2">
+              <div class="w-full">
+            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Services details</h2>
+                  <div>Odometer: 123123</div>
+                  <div>Service Date 2024-1-1</div>
               </div>
           </div>
-          <div class="overflow-x-auto">
+        <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+ <div class="overflow-x-auto">
               <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                           <th scope="col" class="px-4 py-3">Name</th>
-                          <th scope="col" class="px-4 py-3">Email</th>
-                          <th scope="col" class="px-4 py-3">Status</th>
-                          <th scope="col" class="px-4 py-3">Actions</th>
+                          <th scope="col" class="px-4 py-3">price</th>
                       </tr>
                   </thead>
                   <tbody>
-                      {% for user in users %}
+                      {% for odometer_entry in odometer_entries %}
                       <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                           <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ user.name }}
+                            date
                           </th>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ user.email }}</td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                          <input disabled checked id="disabled-checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    tutaj warunkowo checked jesli status true
-                          </td>
-
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <div class="flex items-center">
-                                  <div class="inline-block w-4 h-4 mr-2 rounded-full" style="background-color: {{ vehicle.vehicle_status.color }}"></div>
-                                  {{ vehicle.vehicle_status.name }}
-                              </div>
-                          </td>
-                          <td class="px-4 py-2">Actions</td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Name</td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">price</td>
                       </tr>
 
                       {% endfor %}
+                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                          </th>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Total</td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">0$</td>
+                      </tr>
                   </tbody>
               </table>
           </div>
@@ -94,8 +83,10 @@
                   </li>
               </ul>
           </nav>
-      </div>
-  </div>
+
+        </div>
+        </div>
+    </div>
 </section>
 
 {% endblock content %}

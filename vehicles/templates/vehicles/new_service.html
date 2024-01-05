@@ -2,5 +2,75 @@
 
 
 {% block content %}
+       <div class="w-full">
+            <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">New Service</h2>
+            <form class="p-4 md:p-5">
+                <div class="grid gap-4 mb-4 grid-cols-2">
+                    <div class="col-span-2">
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Service date</label>
+                        <div class="relative">
+                             <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+                        </div>
+                         </div>
+                    <div class="col-span-2">
+                        <label for="Odometer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Odometer</label>
+                         <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Odometer">
+                    </div>
+
+                </div>
+                <div>
+                   <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Service fields</h2>
+
+
+                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                      <tr>
+                          <th scope="col" class="px-4 py-3">Name</th>
+                          <th scope="col" class="px-4 py-3">Value</th>
+                          <th scope="col" class="px-4 py-3">Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                                      {#                    #}
+
+                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name">
+                          </td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Value">
+                          </td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                           <button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                                -
+                         </button>
+                          </td>
+                      </tr>
+                        {#                    #}
+
+                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                   </td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                </td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                            <button type="submit" class="inline-flex text-white items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                +
+                            </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+
+
+                </div>
+                <div class="text-center">
+                <button type="submit" class="inline-flex text-white items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
+                    New service
+                </button>
+                </div>
+            </form>
+       </div>
 
 {% endblock content %}
