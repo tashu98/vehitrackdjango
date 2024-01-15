@@ -1,14 +1,14 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import *
 from .models import Vehicle, VehicleType, VehicleStatus
 
 
 # Create your views here.
-class DashboardView(View):
+class DashboardView(LoginRequiredMixin, View):
     template_name = 'vehicles/dashboard.html'
 
     def get(self, request, *args, **kwargs):
@@ -26,7 +26,7 @@ class DashboardView(View):
         return render(request, self.template_name, context)
 
 
-class VehicleListView(View):
+class VehicleListView(LoginRequiredMixin, View):
     template_name = 'vehicles/vehicle_list.html'
     form_class = VehicleForm
 
@@ -69,7 +69,7 @@ class VehicleListView(View):
         return render(request, self.template_name, context)
 
 
-class VehicleTypeListView(View):
+class VehicleTypeListView(LoginRequiredMixin, View):
     template_name = 'vehicles/vehicle_type_list.html'
     form_class = VehicleTypeForm
 
@@ -114,7 +114,7 @@ class VehicleTypeListView(View):
         return render(request, self.template_name, context)
 
 
-class VehicleStatusListView(View):
+class VehicleStatusListView(LoginRequiredMixin, View):
     template_name = 'vehicles/vehicle_status_list.html'
 
     def get(self, request, *args, **kwargs):
@@ -146,7 +146,7 @@ class VehicleStatusListView(View):
         return render(request, self.template_name, context)
 
 
-class ServicesListView(View):
+class ServicesListView(LoginRequiredMixin, View):
     template_name = 'vehicles/services_list.html'
 
     def get(self, request, *args, **kwargs):
@@ -154,7 +154,7 @@ class ServicesListView(View):
         return render(request, self.template_name)
 
 
-class ServiceDetailsView(View):
+class ServiceDetailsView(LoginRequiredMixin, View):
     template_name = 'vehicles/service_details.html'
 
     def get(self, request, *args, **kwargs):
@@ -162,7 +162,7 @@ class ServiceDetailsView(View):
         return render(request, self.template_name)
 
 
-class VehicleDetailsView(View):
+class VehicleDetailsView(LoginRequiredMixin, View):
     template_name = 'vehicles/vehicle_details.html'
 
     def get(self, request, *args, **kwargs):
@@ -170,7 +170,7 @@ class VehicleDetailsView(View):
         return render(request, self.template_name)
 
 
-class NewServiceView(View):
+class NewServiceView(LoginRequiredMixin, View):
     template_name = 'vehicles/new_service.html'
 
     def get(self, request, *args, **kwargs):

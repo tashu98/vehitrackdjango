@@ -142,6 +142,6 @@ COMPRESS_ENABLED = True
 STATICFILES_FINDERS = ('compressor.finders.CompressorFinder', 'django.contrib.staticfiles.finders.FileSystemFinder',
                        'django.contrib.staticfiles.finders.AppDirectoriesFinder',)
 
-
 LOGOUT_REDIRECT_URL = '/login'
 LOGIN_REDIRECT_URL = '/vehicles/dashboard'
+LOGIN_URL = '/login'

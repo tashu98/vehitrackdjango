@@ -19,12 +19,15 @@ from django.urls import path, include
 from .views import index
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import RedirectView
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
     path('', include('django.contrib.auth.urls')),
-    path('vehicles/', include('vehicles.urls'))
+    path('vehicles/', include('vehicles.urls')),
+    path('', RedirectView.as_view(url='/vehicles/dashboard', permanent=True)),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
