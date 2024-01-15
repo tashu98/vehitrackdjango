@@ -8,23 +8,23 @@
 <div class="grid grid-cols-4 gap-2">
 
 <div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Users : 40</h5>
-    <p class="font-normal text-gray-700 dark:text-gray-400">Active Users : 10</p>
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Users : {{ total_users }}</h5>
+    <p class="font-normal text-gray-700 dark:text-gray-400">Active Users : {{ active_users|default:0 }}</p>
 </div>
 <div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Vehicles : 40</h5>
-    <p class="font-normal text-gray-700 dark:text-gray-400">Active Vehicles : 10</p>
+    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Vehicles : {{ total_vehicles }}</h5>
+    <p class="font-normal text-gray-700 dark:text-gray-400">Active Vehicles : {{ active_vehicles }}</p>
 </div>
 <div class="block p-2 bg-white border border-gray-200 rounded-lg shadow col-span-1">
     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Service costs</h5>
     <div class="grid grid-cols-2">
         <div>
                 <p class="font-small text-gray-700 dark:text-gray-400">last 7 days</p>
-                <p class="font-small text-gray-700 dark:text-gray-400">10000$</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">{{ service_costs_7_days|floatformat:2 }}</p>
         </div>
         <div>
                 <p class="font-small text-gray-700 dark:text-gray-400">last 30 days</p>
-                <p class="font-small text-gray-700 dark:text-gray-400">100000$</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">{{ service_costs_30_days|floatformat:2 }} </p>
         </div>
     </div>
 </div>
@@ -33,11 +33,11 @@
     <div class="grid grid-cols-2">
         <div>
                 <p class="font-small text-gray-700 dark:text-gray-400">last 7 days</p>
-                <p class="font-small text-gray-700 dark:text-gray-400">10000</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">{{ mileage_7_days|floatformat:2 }}</p>
         </div>
         <div>
                 <p class="font-small text-gray-700 dark:text-gray-400">last 30 days</p>
-                <p class="font-small text-gray-700 dark:text-gray-400">100000</p>
+                <p class="font-small text-gray-700 dark:text-gray-400">{{ mileage_30_days|floatformat:2 }}</p>
         </div>
     </div>
 

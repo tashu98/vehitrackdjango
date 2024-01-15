@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -12,16 +12,29 @@ class DashboardView(LoginRequiredMixin, View):
     template_name = 'vehicles/dashboard.html'
 
     def get(self, request, *args, **kwargs):
-        # Example data for the dashboard
+        # Retrieve the total number of vehicles
         total_vehicles = Vehicle.objects.count()
-        vehicle_types = VehicleType.objects.all()
-        vehicle_statuses = VehicleStatus.objects.all()
+        total_users = User.objects.count()
+        active_users = User.objects.filter(is_active=True).count()
+        active_vehicles = Vehicle.objects.filter(vehicle_status__name='Active').count()
 
-        # Pass the data to the template
+        service_costs_7_days = Vehicle.get_total_service_costs_last_days(7)
+        service_costs_30_days = Vehicle.get_total_service_costs_last_days(30)
+
+        mileage_7_days = Vehicle.get_total_km_last_days(7)
+        mileage_30_days = Vehicle.get_total_km_last_days(30)
+
+
+
         context = {
             'total_vehicles': total_vehicles,
-            'vehicle_types': vehicle_types,
-            'vehicle_statuses': vehicle_statuses,
+            'total_users': total_users,
+            'service_costs_7_days': service_costs_7_days,
+            'service_costs_30_days': service_costs_30_days,
+            'mileage_7_days': mileage_7_days,
+            'mileage_30_days': mileage_30_days,
+            'active_users': active_users,
+            'active_vehicles': active_vehicles,
         }
         return render(request, self.template_name, context)
 
@@ -100,7 +113,7 @@ class VehicleTypeListView(LoginRequiredMixin, View):
             # Save the new vehicle type
             form.save()
             # Redirect to the same page (GET) after successful form submission
-            return redirect('your_vehicle_type_list_url_name')
+            return redirect('vehicle_types_list')
 
         # If form is not valid, render the same page with the error messages
         vehicle_types = VehicleType.objects.all()
@@ -150,8 +163,13 @@ class ServicesListView(LoginRequiredMixin, View):
     template_name = 'vehicles/services_list.html'
 
     def get(self, request, *args, **kwargs):
+        services = Service.objects.all()
+
+        context = {
+            'services': services,
+        }
         # Retrieve the list of vehicle statuses from the database
-        return render(request, self.template_name)
+        return render(request, self.template_name, context)
 
 
 class ServiceDetailsView(LoginRequiredMixin, View):
@@ -162,12 +180,112 @@ class ServiceDetailsView(LoginRequiredMixin, View):
         return render(request, self.template_name)
 
 
-class VehicleDetailsView(LoginRequiredMixin, View):
+class VehicleDetailsView(View):
     template_name = 'vehicles/vehicle_details.html'
+    odometer_entry_form_class = OdometerEntryForm
+    change_status_form_class = ChangeStatusForm
 
     def get(self, request, *args, **kwargs):
-        # Retrieve the list of vehicle statuses from the database
-        return render(request, self.template_name)
+        vehicle = get_object_or_404(Vehicle, pk=kwargs['id'])
+        vehicle_statuses = VehicleStatus.objects.all()
+
+        odometer_entry_form = self.odometer_entry_form_class()
+        change_status_form = self.change_status_form_class()
+
+        last_odometer_entry = vehicle.get_last_odometer_entry().value
+        odometer_from_7_days = vehicle.get_odometer_entry_from_date(
+            datetime.date.today() - datetime.timedelta(days=7)).value
+        odometer_from_30_days = vehicle.get_odometer_entry_from_date(
+            datetime.date.today() - datetime.timedelta(days=30)).value
+        km_from_7_days = vehicle.get_km_per_day_from_last_days(7)
+        km_from_30_days = vehicle.get_km_per_day_from_last_days(30)
+        service_cost_7_days = vehicle.get_service_cost_from_last_days(7)
+        service_cost_30_days = vehicle.get_service_cost_from_last_days(30)
+        cost_per_km_7_days = vehicle.get_cost_per_km_from_last_days(7)
+        cost_per_km_30_days = vehicle.get_cost_per_km_from_last_days(30)
+
+        services = vehicle.get_services()
+        odometer_entries = vehicle.get_all_odometer_entries()
+
+        context = {
+            'vehicle': vehicle,
+            'vehicle_statuses': vehicle_statuses,
+
+            'odometer_entry_form': odometer_entry_form,
+            'change_status_form': change_status_form,
+
+            'last_odometer_entry': last_odometer_entry,
+            'odometer_from_7_days': odometer_from_7_days,
+            'odometer_from_30_days': odometer_from_30_days,
+            'km_per_day_7': km_from_7_days,
+            'km_per_day_30': km_from_30_days,
+            'service_cost_7_days': service_cost_7_days,
+            'service_cost_30_days': service_cost_30_days,
+            'cost_per_km_7_days': cost_per_km_7_days,
+            'cost_per_km_30_days': cost_per_km_30_days,
+            'services': services,
+            'odometer_entries': odometer_entries,
+        }
+
+        return render(request, self.template_name, context)
+
+    def post(self, request, *args, **kwargs):
+        vehicle = Vehicle.objects.get(id=kwargs['id'])
+        vehicle_statuses = VehicleStatus.objects.all()
+
+        odometer_entry_form = self.odometer_entry_form_class(request.POST)
+        change_status_form = self.change_status_form_class(request.POST)
+
+        if odometer_entry_form.is_valid():
+            value = odometer_entry_form.cleaned_data['value']
+            date = odometer_entry_form.cleaned_data['date']
+
+            vehicle.add_odometer_entry(value, date)
+            return redirect('vehicle_details', id=kwargs['id'])
+
+        if change_status_form.is_valid():
+            new_status = change_status_form.cleaned_data['vehicle_status']
+            vehicle.change_status(new_status)
+
+            return redirect('vehicle_details', id=kwargs['id'])
+
+        last_odometer_entry = vehicle.get_last_odometer_entry().value
+        odometer_from_7_days = vehicle.get_odometer_entry_from_date(
+            datetime.date.today() - datetime.timedelta(days=7)).value
+        odometer_from_30_days = vehicle.get_odometer_entry_from_date(
+            datetime.date.today() - datetime.timedelta(days=30)).value
+        km_from_7_days = vehicle.get_km_per_day_from_last_days(7)
+        km_from_30_days = vehicle.get_km_per_day_from_last_days(30)
+        service_cost_7_days = vehicle.get_service_cost_from_last_days(7)
+        service_cost_30_days = vehicle.get_service_cost_from_last_days(30)
+        cost_per_km_7_days = vehicle.get_cost_per_km_from_last_days(7)
+        cost_per_km_30_days = vehicle.get_cost_per_km_from_last_days(30)
+
+        services = vehicle.get_services()
+        odometer_entries = vehicle.get_all_odometer_entries()
+
+        context = {
+            'vehicle': vehicle,
+            'vehicle_statuses': vehicle_statuses,
+
+            'odometer_entry_form': odometer_entry_form,
+            'change_status_form': change_status_form,
+
+            'last_odometer_entry': last_odometer_entry,
+            'odometer_from_7_days': odometer_from_7_days,
+            'odometer_from_30_days': odometer_from_30_days,
+            'km_per_day_7': km_from_7_days,
+            'km_per_day_30': km_from_30_days,
+            'service_cost_7_days': service_cost_7_days,
+            'service_cost_30_days': service_cost_30_days,
+            'cost_per_km_7_days': cost_per_km_7_days,
+            'cost_per_km_30_days': cost_per_km_30_days,
+            'services': services,
+            'odometer_entries': odometer_entries,
+        }
+
+        return render(request, self.template_name, context)
+
 
 
 class NewServiceView(LoginRequiredMixin, View):

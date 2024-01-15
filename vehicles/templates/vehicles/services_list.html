@@ -24,15 +24,12 @@
                       {% for service in services %}
                       <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                           <th scope="row" class="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            date
+                            {{ service.service_date }}
                           </th>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"> Total</td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"> Service fields</td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ service.get_service_cost }}</td>
+                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ service.get_service_fields_names_string }}</td>
                           <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <div class="flex items-center">
-                                  <div class="inline-block w-4 h-4 mr-2 rounded-full" style="background-color: {{ vehicle.vehicle_status.color }}"></div>
-                                  {{ vehicle.vehicle_status.name }}
-                              </div>
+                              <a href="{% url 'vehicle_details' id=service.vehicle.id %}">{{ service.vehicle.name }}</a>
                           </td>
                           <td class="px-4 py-2">Actions</td>
                       </tr>

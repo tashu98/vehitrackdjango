@@ -35,3 +35,21 @@ class VehicleStatusForm(forms.ModelForm):
     class Meta:
         model = VehicleStatus
         fields = ['name', 'color']
+
+
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['service_date', 'vehicle']
+
+
+class OdometerEntryForm(forms.ModelForm):
+    class Meta:
+        model = OdometerEntry
+        fields = ['value', 'date']
+
+
+class ChangeStatusForm(forms.ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = ['vehicle_status']
