@@ -48,6 +48,11 @@ class OdometerEntryForm(forms.ModelForm):
         model = OdometerEntry
         fields = ['value', 'date']
 
+class NewServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ['service_date']
+
 
 class ChangeStatusForm(forms.ModelForm):
     class Meta:

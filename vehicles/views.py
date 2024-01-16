@@ -176,8 +176,14 @@ class ServiceDetailsView(LoginRequiredMixin, View):
     template_name = 'vehicles/service_details.html'
 
     def get(self, request, *args, **kwargs):
+        service = get_object_or_404(Service, pk=kwargs['id'])
         # Retrieve the list of vehicle statuses from the database
-        return render(request, self.template_name)
+        service_fields = service.get_service_fields()
+        context = {
+            'service': service,
+            'service_fields': service_fields
+        }
+        return render(request, self.template_name, context)
 
 
 class VehicleDetailsView(View):
@@ -290,7 +296,22 @@ class VehicleDetailsView(View):
 
 class NewServiceView(LoginRequiredMixin, View):
     template_name = 'vehicles/new_service.html'
+    service_form_field = NewServiceForm
 
     def get(self, request, *args, **kwargs):
+        vehicle = Vehicle.objects.get(id=kwargs['id'])
         # Retrieve the list of vehicle statuses from the database
+        return render(request, self.template_name)
+
+    def post(self, request, *args, **kwargs):
+        vehicle = Vehicle.objects.get(id=kwargs['id'])
+
+        service_entry_form = self.service_form_field(request.POST)
+
+        if service_entry_form.is_valid():
+            date = service_entry_form.cleaned_data['service_date']
+
+            vehicle.add_service_entry(date)
+            return redirect('vehicle_details', id=kwargs['id'])
+
         return render(request, self.template_name)

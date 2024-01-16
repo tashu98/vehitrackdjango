@@ -46,6 +46,10 @@ class Vehicle(models.Model):
         odometer_entry = OdometerEntry(value=value, date=date, is_void=is_void, vehicle=self)
         odometer_entry.save()
 
+    def add_service_entry(self, date):
+        service = Service(service_date=date, vehicle=self)
+        service.save()
+
     def change_status(self, vehicle_status):
         self.vehicle_status = vehicle_status
         self.save()

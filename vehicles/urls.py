@@ -9,5 +9,5 @@ urlpatterns = [
     path('statuses', VehicleStatusListView.as_view(), name='vehicle_statuses_list'),
     path('services', ServicesListView.as_view(), name='services_list'),
     path('<int:id>/new-service', NewServiceView.as_view(), name='new_service'),
-    path('service', ServiceDetailsView.as_view(), name='service_details'),
+    path('service/<int:id>', ServiceDetailsView.as_view(), name='service_details'),
 ]

@@ -4,25 +4,22 @@
 {% block content %}
        <div class="w-full">
             <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">New Service</h2>
-            <form class="p-4 md:p-5">
+            <form method="post" class="p-4 md:p-5">
+                {% csrf_token %}
                 <div class="grid gap-4 mb-4 grid-cols-2">
                     <div class="col-span-2">
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Service date</label>
                         <div class="relative">
-                             <input type="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+                             <input type="datetime-local" id="service_date" name="service_date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
                         </div>
                          </div>
-                    <div class="col-span-2">
-                        <label for="Odometer" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Odometer</label>
-                         <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Odometer">
-                    </div>
 
                 </div>
                 <div>
                    <h2 class="mb-5 text-2xl font-extrabold tracking-tight text-gray-900 dark:text-white">Service fields</h2>
 
 
-                  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <table id="serviceFields" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                   <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
                           <th scope="col" class="px-4 py-3">Name</th>
@@ -31,36 +28,19 @@
                       </tr>
                   </thead>
                   <tbody>
-                                      {#                    #}
-
-                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name">
-                          </td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Value">
-                          </td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                           <button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                -
-                         </button>
-                          </td>
-                      </tr>
-                        {#                    #}
-
                       <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                           <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                    </td>
                           <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 </td>
-                          <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
-                            <button type="submit" class="inline-flex text-white items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                +
-                            </button>
-                          </td>
                       </tr>
                   </tbody>
               </table>
+             <div class="flex justify-end p-6 pr-16">
+                <button id="addServiceField" type="button" class="inline-flex text-white items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                +
+            </button>
+            </div>
 
 
                 </div>
@@ -71,6 +51,41 @@
                 </button>
                 </div>
             </form>
+
+       <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const addButton = document.querySelector("#addServiceField");
+        const tableBody = document.querySelector("#serviceFields tbody");
+
+        addButton.addEventListener("click", function () {
+            const newRow = document.createElement("tr");
+            newRow.className = "border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700";
+
+            newRow.innerHTML = `
+                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Name">
+                </td>
+                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <input type="number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Value">
+                </td>
+                <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white text-right">
+                    <button class="removeServiceField focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                        -
+                    </button>
+                </td>
+            `;
+
+            tableBody.appendChild(newRow);
+        });
+
+        tableBody.addEventListener("click", function (event) {
+            if (event.target.classList.contains("removeServiceField")) {
+                const row = event.target.closest("tr");
+                row.remove();
+            }
+        });
+    });
+</script>
        </div>
 
 {% endblock content %}
